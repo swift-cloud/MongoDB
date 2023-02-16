@@ -24,6 +24,10 @@ public struct DataAPIClient: Sendable {
         self.apiKey = apiKey
     }
 
+    public func collection(_ name: String) -> Collection {
+        return .init(name: name, client: self)
+    }
+
     public func send(_ action: some Action, in collection: String) async throws -> FetchResponse {
         var body = action.body
         body.dataSource = cluster

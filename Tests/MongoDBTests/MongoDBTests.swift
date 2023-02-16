@@ -20,4 +20,9 @@ final class MongoDBTests: XCTestCase {
         let users = try await client.send(action, in: "users").json()
         print(users)
     }
+
+    func testCollection() async throws {
+        let users = try await client.collection("users").send(.findOne())
+        print(users)
+    }
 }
