@@ -11,8 +11,10 @@ public struct FindAction<Filter: Encodable>: Action {
         public var database: String? = nil
         public var collection: String? = nil
         public var filter: Filter
+        public var projection: Projection? = nil
         public var sort: Sort? = nil
         public var limit: Limit? = nil
+        public var skip: Skip? = nil
     }
 
     public let type = ActionType.find
@@ -21,33 +23,37 @@ public struct FindAction<Filter: Encodable>: Action {
 
     public init(
         filter: Filter,
+        projection: Projection? = nil,
         sort: Sort? = nil,
         limit: Limit? = nil
     ) {
-        self.body = .init(filter: filter, sort: sort, limit: limit)
+        self.body = .init(filter: filter, projection: projection, sort: sort, limit: limit)
     }
 
     public init(
+        projection: Projection? = nil,
         sort: Sort? = nil,
         limit: Limit? = nil
     ) where Filter == AllFilter {
-        self.body = .init(filter: .all, sort: sort, limit: limit)
+        self.body = .init(filter: .all, projection: projection, sort: sort, limit: limit)
     }
 }
 
 extension Action {
     public static func find(
+        projection: Projection? = nil,
         sort: Sort? = nil,
         limit: Limit? = nil
     ) -> Self where Self == FindAction<AllFilter> {
-        return .init(sort: sort, limit: limit)
+        return .init(projection: projection, sort: sort, limit: limit)
     }
 
     public static func find<Filter: Encodable>(
         filter: Filter,
+        projection: Projection? = nil,
         sort: Sort? = nil,
         limit: Limit? = nil
     ) -> Self where Self == FindAction<Filter> {
-        return .init(filter: filter, sort: sort, limit: limit)
+        return .init(filter: filter, projection: projection, sort: sort, limit: limit)
     }
 }

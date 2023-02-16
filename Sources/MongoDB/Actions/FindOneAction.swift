@@ -11,29 +11,38 @@ public struct FindOneAction<Filter: Encodable>: Action {
         public var database: String? = nil
         public var collection: String? = nil
         public var filter: Filter
+        public var projection: Projection? = nil
     }
 
     public let type = ActionType.findOne
 
     public let body: Body
 
-    public init(filter: Filter) {
-        self.body = .init(filter: filter)
+    public init(
+        filter: Filter,
+        projection: Projection? = nil
+    ) {
+        self.body = .init(filter: filter, projection: projection)
     }
 
-    public init() where Filter == AllFilter {
-        self.body = .init(filter: .all)
+    public init(
+        projection: Projection? = nil
+    ) where Filter == AllFilter {
+        self.body = .init(filter: .all, projection: projection)
     }
 }
 
 extension Action {
-    public static func findOne() -> Self where Self == FindOneAction<AllFilter> {
-        return .init()
+    public static func findOne(
+        projection: Projection? = nil
+    ) -> Self where Self == FindOneAction<AllFilter> {
+        return .init(projection: projection)
     }
 
     public static func findOne<Filter: Encodable>(
-        filter: Filter
+        filter: Filter,
+        projection: Projection? = nil
     ) -> Self where Self == FindOneAction<Filter> {
-        return .init(filter: filter)
+        return .init(filter: filter, projection: projection)
     }
 }
