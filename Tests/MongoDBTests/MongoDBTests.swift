@@ -97,7 +97,7 @@ final class MongoDBTests: XCTestCase {
         XCTAssertEqual(docs.count, res.insertedIds.count)
     }
 
-    func testInsertAndFind() async throws {
+    func testInsertAndFindOne() async throws {
         let doc = User(name: UUID().uuidString, age: .random(in: 10...100))
         let res = try await collection
             .send(.insertOne(document: doc))
@@ -108,5 +108,18 @@ final class MongoDBTests: XCTestCase {
             .document
         XCTAssertNotNil(user)
         XCTAssertEqual(user!._id, doc._id, res.insertedId)
+    }
+
+    func testInsertAndFind() async throws {
+        let doc = User(name: UUID().uuidString, age: .random(in: 10...100))
+        let res = try await collection
+            .send(.insertOne(document: doc))
+            .result()
+        let users = try await collection
+            .send(.find(filter: ["_id": res.insertedId]))
+            .result(User.self)
+            .documents
+        XCTAssertEqual(users.count, 1)
+        XCTAssertEqual(users[0]._id, doc._id, res.insertedId)
     }
 }
