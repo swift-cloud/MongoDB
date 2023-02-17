@@ -40,7 +40,7 @@ public struct FindAction<Filter: Encodable>: Action {
         self.body = .init(filter: .all, projection: projection, sort: sort, limit: limit)
     }
 
-    public func response(_ response: FetchResponse) -> some ActionResponse {
+    public func response(_ response: FetchResponse) -> DocumentsResponse {
         return DocumentsResponse(response: response)
     }
 }

@@ -36,7 +36,7 @@ public struct ReplaceOneAction<Filter: Encodable, Replacement: Encodable>: Actio
         self.body = .init(filter: filter, replacement: replacement, upsert: upsert)
     }
 
-    public func response(_ response: FetchResponse) -> some ActionResponse {
+    public func response(_ response: FetchResponse) -> UpdateResponse {
         return UpdateResponse(response: response)
     }
 }

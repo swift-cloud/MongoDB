@@ -11,7 +11,7 @@ let client = DataAPIClient(
 final class MongoDBTests: XCTestCase {
 
     func testFindOne() async throws {
-        let user = try await client.send(.findOne(), in: "users").json()
+        let user = try await client.send(.findOne(), in: "users")
         print(user)
     }
 

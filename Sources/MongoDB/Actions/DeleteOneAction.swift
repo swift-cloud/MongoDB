@@ -27,7 +27,7 @@ public struct DeleteOneAction<Filter: Encodable>: Action {
         self.body = .init(filter: .all)
     }
 
-    public func response(_ response: FetchResponse) -> some ActionResponse {
+    public func response(_ response: FetchResponse) -> DeleteResponse {
         return DeleteResponse(response: response)
     }
 }

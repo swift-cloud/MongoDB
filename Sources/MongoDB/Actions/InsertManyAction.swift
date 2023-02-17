@@ -25,7 +25,7 @@ public struct InsertManyAction<Document: Encodable>: Action {
         self.body = .init(documents: documents)
     }
 
-    public func response(_ response: FetchResponse) -> some ActionResponse {
+    public func response(_ response: FetchResponse) -> InsertManyResponse {
         return InsertManyResponse(response: response)
     }
 }

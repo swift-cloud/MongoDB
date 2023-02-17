@@ -36,7 +36,7 @@ public struct DeleteManyAction<Filter: Encodable>: Action {
         self.body = .init(filter: .all, sort: sort, limit: limit)
     }
 
-    public func response(_ response: FetchResponse) -> some ActionResponse {
+    public func response(_ response: FetchResponse) -> DeleteResponse {
         return DeleteResponse(response: response)
     }
 }

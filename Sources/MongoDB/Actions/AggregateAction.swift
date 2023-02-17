@@ -25,7 +25,7 @@ public struct AggregateAction: Action {
         self.body = .init(pipeline: pipeline)
     }
 
-    public func response(_ response: FetchResponse) -> some ActionResponse {
+    public func response(_ response: FetchResponse) -> DocumentsResponse {
         return DocumentsResponse(response: response)
     }
 }

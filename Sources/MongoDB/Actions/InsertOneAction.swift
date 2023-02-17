@@ -25,7 +25,7 @@ public struct InsertOneAction<Document: Encodable>: Action {
         self.body = .init(document: document)
     }
 
-    public func response(_ response: FetchResponse) -> some ActionResponse {
+    public func response(_ response: FetchResponse) -> InsertOneResponse {
         return InsertOneResponse(response: response)
     }
 }

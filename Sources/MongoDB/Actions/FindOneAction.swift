@@ -33,7 +33,7 @@ public struct FindOneAction<Filter: Encodable>: Action {
         self.body = .init(filter: .all, projection: projection)
     }
 
-    public func response(_ response: FetchResponse) -> some ActionResponse {
+    public func response(_ response: FetchResponse) -> DocumentResponse {
         return DocumentResponse(response: response)
     }
 }

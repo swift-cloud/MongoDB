@@ -36,7 +36,7 @@ public struct UpdateManyAction<Filter: Encodable, Update: Encodable>: Action {
         self.body = .init(filter: filter, update: update, upsert: upsert)
     }
 
-    public func response(_ response: FetchResponse) -> some ActionResponse {
+    public func response(_ response: FetchResponse) -> UpdateResponse {
         return UpdateResponse(response: response)
     }
 }
