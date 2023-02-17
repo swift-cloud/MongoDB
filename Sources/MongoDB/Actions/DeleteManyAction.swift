@@ -17,7 +17,7 @@ public struct DeleteManyAction<Filter: Encodable>: Action {
         public var limit: Limit? = nil
     }
 
-    public let type = ActionType.find
+    public let type = ActionType.deleteMany
 
     public let body: Body
 

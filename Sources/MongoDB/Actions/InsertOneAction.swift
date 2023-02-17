@@ -15,7 +15,7 @@ public struct InsertOneAction<Document: Encodable>: Action {
         public var document: Document
     }
 
-    public let type = ActionType.insertMany
+    public let type = ActionType.insertOne
 
     public let body: Body
 

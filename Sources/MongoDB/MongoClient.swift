@@ -33,15 +33,23 @@ public struct MongoClient: Sendable {
         body.dataSource = cluster
         body.database = database
         body.collection = collection
-        let res = try await fetch("\(endpoint)/action/\(action.type.rawValue)", .options(
+        let response = try await fetch("\(endpoint)/action/\(action.type.rawValue)", .options(
             method: .post,
             body: .json(body),
             headers: [
                 "accept": "application/json",
-                "content-type": "application/json",
-                "api-key": apiKey
+                "access-control-request-headers": "*",
+                "api-key": apiKey,
+                "content-type": "application/json"
             ]
         ))
-        return action.response(res)
+        guard response.ok else {
+            throw MongoClientError.sendFailed(response: response)
+        }
+        return action.response(response)
     }
+}
+
+public enum MongoClientError: Error {
+    case sendFailed(response: FetchResponse)
 }
