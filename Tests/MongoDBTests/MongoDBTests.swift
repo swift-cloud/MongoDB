@@ -14,6 +14,12 @@ struct User: Codable {
     let _id: String
     let name: String
     let age: Int
+
+    init(name: String, age: Int) {
+        self._id = UUID().uuidString.lowercased()
+        self.name = name
+        self.age = age
+    }
 }
 
 final class MongoDBTests: XCTestCase {
@@ -62,5 +68,32 @@ final class MongoDBTests: XCTestCase {
         XCTAssertEqual(res.matchedCount, 0)
         XCTAssertEqual(res.modifiedCount, 0)
         XCTAssertNil(res.upsertedId)
+    }
+
+    func testReplaceOneEmpty() async throws {
+        let res = try await collection
+            .send(.replaceOne(filter: ["name": "andrew"], replacement: ["a": 1]))
+            .result()
+        XCTAssertEqual(res.matchedCount, 0)
+        XCTAssertEqual(res.modifiedCount, 0)
+        XCTAssertNil(res.upsertedId)
+    }
+
+    func testInsertOne() async throws {
+        let doc = User(name: UUID().uuidString, age: .random(in: 10...100))
+        let res = try await collection
+            .send(.insertOne(document: doc))
+            .result()
+        XCTAssertEqual(doc._id, res.insertedId)
+    }
+
+    func testInsertMany() async throws {
+        let docs = Array(1...10).map { _ in
+            User(name: UUID().uuidString, age: .random(in: 10...100))
+        }
+        let res = try await collection
+            .send(.insertMany(documents: docs))
+            .result()
+        XCTAssertEqual(docs.count, res.insertedIds.count)
     }
 }
