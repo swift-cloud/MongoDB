@@ -11,7 +11,7 @@ public struct Collection {
 
     public let name: String
 
-    internal let client: DataAPIClient
+    internal let client: MongoClient
 
     public func send<A: Action>(_ action: A) async throws -> A.Response {
         return try await client.send(action, in: name)

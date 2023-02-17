@@ -1,7 +1,7 @@
 import XCTest
 @testable import MongoDB
 
-let client = DataAPIClient(
+let client = MongoClient(
     endpoint: "https://us-east-1.aws.data.mongodb-api.com/app/data-xqtwh/endpoint/data/v1",
     cluster: "one-bite-dev",
     database: "development",

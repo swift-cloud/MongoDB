@@ -7,7 +7,7 @@
 
 import Compute
 
-public struct DataAPIClient: Sendable {
+public struct MongoClient: Sendable {
 
     public let endpoint: String
 
