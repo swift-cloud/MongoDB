@@ -2,10 +2,10 @@ import XCTest
 @testable import MongoDB
 
 let client = MongoClient(
-    endpoint: "https://us-east-1.aws.data.mongodb-api.com/app/data-xqtwh/endpoint/data/v1",
-    cluster: "one-bite-dev",
+    endpoint: "https://us-east-1.aws.data.mongodb-api.com/app/data-trlzv/endpoint/data/v1",
+    cluster: "swift-cloud",
     database: "development",
-    apiKey: "....."
+    apiKey: ProcessInfo.processInfo.environment["MONGODB_API_KEY"]!
 )
 
 final class MongoDBTests: XCTestCase {

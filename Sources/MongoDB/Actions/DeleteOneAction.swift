@@ -37,9 +37,7 @@ extension Action {
         return .init()
     }
 
-    public static func deleteOne<Filter: Encodable>(
-        filter: Filter
-    ) -> Self where Self == DeleteOneAction<Filter> {
+    public static func deleteOne<Filter: Encodable>(filter: Filter) -> Self where Self == DeleteOneAction<Filter> {
         return .init(filter: filter)
     }
 }

@@ -19,9 +19,7 @@ public struct InsertOneAction<Document: Encodable>: Action {
 
     public let body: Body
 
-    public init(
-        document: Document
-    ) {
+    public init(document: Document) {
         self.body = .init(document: document)
     }
 
@@ -31,9 +29,7 @@ public struct InsertOneAction<Document: Encodable>: Action {
 }
 
 extension Action {
-    public static func insertOne<T: Encodable>(
-        document: T
-    ) -> Self where Self == InsertOneAction<T> {
+    public static func insertOne<T: Encodable>(document: T) -> Self where Self == InsertOneAction<T> {
         return .init(document: document)
     }
 }

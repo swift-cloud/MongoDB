@@ -19,9 +19,7 @@ public struct AggregateAction: Action {
 
     public let body: Body
 
-    public init(
-        pipeline: AggregatePipeline
-    ) {
+    public init(pipeline: AggregatePipeline) {
         self.body = .init(pipeline: pipeline)
     }
 
@@ -31,9 +29,7 @@ public struct AggregateAction: Action {
 }
 
 extension Action {
-    public static func aggregate(
-        pipeline: AggregatePipeline
-    ) -> Self where Self == AggregateAction {
+    public static func aggregate(pipeline: AggregatePipeline) -> Self where Self == AggregateAction {
         return .init(pipeline: pipeline)
     }
 }

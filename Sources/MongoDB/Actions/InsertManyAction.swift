@@ -19,9 +19,7 @@ public struct InsertManyAction<Document: Encodable>: Action {
 
     public let body: Body
 
-    public init(
-        documents: [Document]
-    ) {
+    public init(documents: [Document]) {
         self.body = .init(documents: documents)
     }
 
@@ -31,9 +29,7 @@ public struct InsertManyAction<Document: Encodable>: Action {
 }
 
 extension Action {
-    public static func insertMany<T: Encodable>(
-        documents: [T]
-    ) -> Self where Self == InsertManyAction<T> {
+    public static func insertMany<T: Encodable>(documents: [T]) -> Self where Self == InsertManyAction<T> {
         return .init(documents: documents)
     }
 }
