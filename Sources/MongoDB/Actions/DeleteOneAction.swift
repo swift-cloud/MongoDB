@@ -5,6 +5,8 @@
 //  Created by Andrew Barba on 2/16/23.
 //
 
+import Compute
+
 public struct DeleteOneAction<Filter: Encodable>: Action {
     public struct Body: ActionBody {
         public var dataSource: String? = nil
@@ -23,6 +25,10 @@ public struct DeleteOneAction<Filter: Encodable>: Action {
 
     public init() where Filter == AllFilter {
         self.body = .init(filter: .all)
+    }
+
+    public func response(_ response: FetchResponse) -> some ActionResponse {
+        return DeleteResponse(response: response)
     }
 }
 

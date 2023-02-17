@@ -5,6 +5,8 @@
 //  Created by Andrew Barba on 2/16/23.
 //
 
+import Compute
+
 public struct FindOneAction<Filter: Encodable>: Action {
     public struct Body: ActionBody {
         public var dataSource: String? = nil
@@ -29,6 +31,10 @@ public struct FindOneAction<Filter: Encodable>: Action {
         projection: Projection? = nil
     ) where Filter == AllFilter {
         self.body = .init(filter: .all, projection: projection)
+    }
+
+    public func response(_ response: FetchResponse) -> some ActionResponse {
+        return DocumentResponse(response: response)
     }
 }
 

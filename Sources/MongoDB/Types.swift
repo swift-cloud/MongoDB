@@ -25,6 +25,10 @@ public enum ProjectionBehavior: Int, Encodable {
 
 public typealias Projection = [Field: ProjectionBehavior]
 
+public typealias AggregatePipelineStep = [String: AnyEncodable]
+
+public typealias AggregatePipeline = [AggregatePipelineStep]
+
 public struct AllFilter: Encodable {
     public static let all = AllFilter()
 }

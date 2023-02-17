@@ -28,12 +28,12 @@ public struct DataAPIClient: Sendable {
         return .init(name: name, client: self)
     }
 
-    public func send(_ action: some Action, in collection: String) async throws -> FetchResponse {
+    public func send<A: Action>(_ action: A, in collection: String) async throws -> A.Response {
         var body = action.body
         body.dataSource = cluster
         body.database = database
         body.collection = collection
-        return try await fetch("\(endpoint)/action/\(action.type.rawValue)", .options(
+        let res = try await fetch("\(endpoint)/action/\(action.type.rawValue)", .options(
             method: .post,
             body: .json(body),
             headers: [
@@ -42,5 +42,6 @@ public struct DataAPIClient: Sendable {
                 "api-key": apiKey
             ]
         ))
+        return action.response(res)
     }
 }

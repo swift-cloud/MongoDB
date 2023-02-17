@@ -13,7 +13,7 @@ public struct Collection {
 
     internal let client: DataAPIClient
 
-    public func send(_ action: some Action) async throws -> FetchResponse {
+    public func send<A: Action>(_ action: A) async throws -> A.Response {
         return try await client.send(action, in: name)
     }
 }

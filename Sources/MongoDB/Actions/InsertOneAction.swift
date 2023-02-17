@@ -5,6 +5,8 @@
 //  Created by Andrew Barba on 2/16/23.
 //
 
+import Compute
+
 public struct InsertOneAction<Document: Encodable>: Action {
     public struct Body: ActionBody {
         public var dataSource: String? = nil
@@ -21,6 +23,10 @@ public struct InsertOneAction<Document: Encodable>: Action {
         document: Document
     ) {
         self.body = .init(document: document)
+    }
+
+    public func response(_ response: FetchResponse) -> some ActionResponse {
+        return InsertOneResponse(response: response)
     }
 }
 

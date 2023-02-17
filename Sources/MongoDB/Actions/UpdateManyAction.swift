@@ -5,6 +5,8 @@
 //  Created by Andrew Barba on 2/16/23.
 //
 
+import Compute
+
 public struct UpdateManyAction<Filter: Encodable, Update: Encodable>: Action {
     public struct Body: ActionBody {
         public var dataSource: String? = nil
@@ -32,6 +34,10 @@ public struct UpdateManyAction<Filter: Encodable, Update: Encodable>: Action {
         upsert: Bool = false
     ) {
         self.body = .init(filter: filter, update: update, upsert: upsert)
+    }
+
+    public func response(_ response: FetchResponse) -> some ActionResponse {
+        return UpdateResponse(response: response)
     }
 }
 
