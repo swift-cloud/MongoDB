@@ -44,12 +44,20 @@ public struct MongoClient: Sendable {
             ]
         ))
         guard response.ok else {
-            throw MongoClientError.sendFailed(response: response)
+            let text = try await response.text()
+            throw MongoClientError.badRequest(message: text, response: response)
         }
         return action.response(response)
     }
 }
 
-public enum MongoClientError: Error {
-    case sendFailed(response: FetchResponse)
+public enum MongoClientError: Error, LocalizedError {
+    case badRequest(message: String, response: FetchResponse)
+
+    public var errorDescription: String? {
+        switch self {
+        case let .badRequest(message, _):
+            return message.trimmingCharacters(in: ["\""])
+        }
+    }
 }

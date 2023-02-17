@@ -45,4 +45,22 @@ final class MongoDBTests: XCTestCase {
             .result()
         XCTAssertEqual(res.deletedCount, 0)
     }
+
+    func testUpdateOneEmpty() async throws {
+        let res = try await collection
+            .send(.updateOne(filter: ["name": "andrew"], update: ["a": 1]))
+            .result()
+        XCTAssertEqual(res.matchedCount, 0)
+        XCTAssertEqual(res.modifiedCount, 0)
+        XCTAssertNil(res.upsertedId)
+    }
+
+    func testUpdateManyEmpty() async throws {
+        let res = try await collection
+            .send(.updateMany(filter: ["name": "andrew"], update: ["a": 1]))
+            .result()
+        XCTAssertEqual(res.matchedCount, 0)
+        XCTAssertEqual(res.modifiedCount, 0)
+        XCTAssertNil(res.upsertedId)
+    }
 }
