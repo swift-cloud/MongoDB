@@ -5,7 +5,12 @@ import PackageDescription
 let package = Package(
     name: "MongoDB",
     platforms: [
-        .macOS(.v11)
+        .macOS(.v11),
+        .iOS(.v13),
+        .tvOS(.v13),
+        .watchOS(.v9),
+        .driverKit(.v22),
+        .macCatalyst(.v13)
     ],
     products: [
         .library(name: "MongoDB", targets: ["MongoDB"])
