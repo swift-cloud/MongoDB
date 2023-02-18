@@ -12,5 +12,8 @@ let client = MongoClient(
     apiKey: "..."
 )
 
-let user = try await client.send(.findOne(), in: "users").json()
+let user = try await client
+    .collection("users")
+    .send(.findOne())
+    .document(User.self)
 ```
