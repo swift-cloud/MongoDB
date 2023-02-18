@@ -17,4 +17,8 @@ public struct InsertManyResponse: ActionResponse {
     public func result() async throws -> Result {
         return try await response.decode(Result.self)
     }
+
+    public func ids() async throws -> [String] {
+        return try await result().insertedIds
+    }
 }

@@ -81,45 +81,53 @@ final class MongoDBTests: XCTestCase {
 
     func testInsertOne() async throws {
         let doc = User(name: UUID().uuidString, age: .random(in: 10...100))
-        let res = try await collection
+        let id = try await collection
             .send(.insertOne(document: doc))
-            .result()
-        XCTAssertEqual(doc._id, res.insertedId)
+            .id()
+        XCTAssertEqual(doc._id, id)
     }
 
     func testInsertMany() async throws {
         let docs = Array(1...10).map { _ in
             User(name: UUID().uuidString, age: .random(in: 10...100))
         }
-        let res = try await collection
+        let ids = try await collection
             .send(.insertMany(documents: docs))
-            .result()
-        XCTAssertEqual(docs.count, res.insertedIds.count)
+            .ids()
+        XCTAssertEqual(docs.count, ids.count)
     }
 
     func testInsertAndFindOne() async throws {
         let doc = User(name: UUID().uuidString, age: .random(in: 10...100))
-        let res = try await collection
+        let id = try await collection
             .send(.insertOne(document: doc))
-            .result()
+            .id()
         let user = try await collection
-            .send(.findOne(filter: ["_id": res.insertedId]))
-            .result(User.self)
-            .document
+            .send(.findOne(filter: ["_id": id]))
+            .document(User.self)
         XCTAssertNotNil(user)
-        XCTAssertEqual(user!._id, doc._id, res.insertedId)
+        XCTAssertEqual(user!._id, doc._id, id)
     }
 
     func testInsertAndFind() async throws {
         let doc = User(name: UUID().uuidString, age: .random(in: 10...100))
-        let res = try await collection
+        let id = try await collection
             .send(.insertOne(document: doc))
-            .result()
+            .id()
         let users = try await collection
-            .send(.find(filter: ["_id": res.insertedId]))
-            .result(User.self)
-            .documents
+            .send(.find(filter: ["_id": id]))
+            .documents(User.self)
         XCTAssertEqual(users.count, 1)
-        XCTAssertEqual(users[0]._id, doc._id, res.insertedId)
+        XCTAssertEqual(users[0]._id, doc._id, id)
+    }
+
+    func testAggregate() async throws {
+        let docs = try await collection
+            .send(.aggregate(pipeline: [
+                .match(["age": ["$gte": 50]]),
+                .limit(10)
+            ]))
+            .documents(User.self)
+        XCTAssertGreaterThanOrEqual(docs.count, 0)
     }
 }

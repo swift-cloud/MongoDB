@@ -17,4 +17,8 @@ public struct DeleteResponse: ActionResponse {
     public func result() async throws -> Result {
         return try await response.decode(Result.self)
     }
+
+    public func count() async throws -> Int {
+        return try await result().deletedCount
+    }
 }

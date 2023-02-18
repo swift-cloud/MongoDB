@@ -17,4 +17,8 @@ public struct DocumentsResponse: ActionResponse {
     public func result<T: Decodable>(_ type: T.Type) async throws -> Result<T> {
         return try await response.decode(Result.self)
     }
+
+    public func documents<T: Decodable>(_ type: T.Type) async throws -> [T] {
+        return try await result(type).documents
+    }
 }

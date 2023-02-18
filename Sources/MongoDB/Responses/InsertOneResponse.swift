@@ -17,4 +17,8 @@ public struct InsertOneResponse: ActionResponse {
     public func result() async throws -> Result {
         return try await response.decode(Result.self)
     }
+
+    public func id() async throws -> String {
+        return try await result().insertedId
+    }
 }

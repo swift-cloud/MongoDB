@@ -33,3 +33,27 @@ extension Action {
         return .init(pipeline: pipeline)
     }
 }
+
+extension AggregatePipelineStep {
+
+    public static func match(_ value: some Encodable) -> Self {
+        return ["$match": .init(value)]
+    }
+
+    public static func group(id: some Encodable, fields: [String: AnyEncodable] = [:]) -> Self {
+        let value = ["_id": id].merging(fields) { $1 }
+        return ["$group": .init(value)]
+    }
+
+    public static func limit(_ value: Limit) -> Self {
+        return ["$limit": .init(value)]
+    }
+
+    public static func skip(_ value: Skip) -> Self {
+        return ["$skip": .init(value)]
+    }
+
+    public static func sort(_ value: Sort) -> Self {
+        return ["$sort": .init(value)]
+    }
+}
