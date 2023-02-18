@@ -1,5 +1,8 @@
 # MongoDB
 
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fswift-cloud%2FMongoDB%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/swift-cloud/MongoDB)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fswift-cloud%2FMongoDB%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/swift-cloud/MongoDB)
+
 A [MongoDB Atlas](https://www.mongodb.com/atlas) Data API library compatible with all Apple platforms, Swift Cloud and Fastly Compute@Edge
 
 ## Usage
